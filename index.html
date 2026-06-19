@@ -104,6 +104,39 @@ canvas{display:block;}
   color:#646e8c;font-size:11px;letter-spacing:.06em;
   background:rgba(8,8,18,.7);padding:5px 16px;border-radius:20px;
 }
+.hud-buttons{
+  position:absolute;bottom:14px;right:18px;
+  display:flex;gap:8px;pointer-events:all;
+}
+.hud-btn{
+  padding:7px 16px;border-radius:6px;border:1px solid #2a2a55;
+  font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;
+  letter-spacing:.08em;cursor:pointer;transition:all .18s;
+  background:rgba(8,8,18,.85);backdrop-filter:blur(6px);
+}
+.hud-btn-pause{color:#50f0c8;border-color:#50f0c866;}
+.hud-btn-pause:hover{background:rgba(80,240,200,.12);border-color:#50f0c8;}
+.hud-btn-quit{color:#f050a0;border-color:#f050a066;}
+.hud-btn-quit:hover{background:rgba(240,80,160,.12);border-color:#f050a0;}
+#pauseOverlay{
+  position:fixed;inset:0;z-index:50;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(8,8,18,.92);backdrop-filter:blur(10px);
+}
+.pause-title{
+  font-family:"JetBrains Mono",monospace;font-size:clamp(36px,6vw,64px);
+  font-weight:700;color:#50f0c8;margin-bottom:32px;letter-spacing:.04em;
+}
+.pause-btn{
+  margin:8px;padding:14px 48px;border-radius:8px;border:none;
+  font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;transition:all .2s;letter-spacing:.04em;pointer-events:all;
+}
+.pause-btn-resume{background:#50f0c8;color:#08080f;box-shadow:0 0 30px rgba(80,240,200,.4);}
+.pause-btn-resume:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(80,240,200,.6);}
+.pause-btn-quit{background:transparent;color:#f050a0;border:1px solid #f050a0;margin-top:4px;}
+.pause-btn-quit:hover{background:rgba(240,80,160,.1);}
+.pause-hint{color:#646e8c;font-size:13px;margin-top:20px;}
 </style>
 </head>
 <body>
@@ -162,7 +195,19 @@ canvas{display:block;}
   <div class="hud-tr">
     <div id="dashIndicator" style="font-size:11px;color:#f050a0;letter-spacing:.1em"></div>
   </div>
-  <div class="controls-hint" id="controlsHint">A/D Move · SPACE Jump (×2) · SHIFT Dash · ESC Quit</div>
+  <div class="controls-hint" id="controlsHint">A/D · SPACE Jump · SHIFT Dash · P Pause</div>
+  <div class="hud-buttons">
+    <button class="hud-btn hud-btn-pause" id="pauseBtn">⏸ PAUSE</button>
+    <button class="hud-btn hud-btn-quit" id="quitBtn">✕ QUIT</button>
+  </div>
+</div>
+
+<!-- PAUSE OVERLAY -->
+<div id="pauseOverlay" class="hidden">
+  <div class="pause-title">PAUSED</div>
+  <button class="pause-btn pause-btn-resume" id="resumeBtn">▶  Resume</button>
+  <button class="pause-btn pause-btn-quit" id="pauseQuitBtn">✕  Quit Game</button>
+  <div class="pause-hint">Press P or ESC to resume</div>
 </div>
 
 <!-- OUTRO -->
@@ -608,7 +653,8 @@ function drawGoal(ctx,gx,gy,gw,gh,ox,oy,t){
 // ═══════════════════════════════════════════════════════════════════════════
 let playerName='', charId='ninja', charData=CHARS[0];
 let levelIndex=0, totalDeaths=0;
-let gamePhase='name'; // name|char|welcome|play|dead|win|complete|outro
+let gamePhase='name';
+let paused=false; // name|char|welcome|play|dead|win|complete|outro
 let phaseT=0;
 
 // Camera
@@ -668,7 +714,7 @@ window.addEventListener('keydown',e=>{
       jbufT=C.JBUF; e.preventDefault();
     }
     if(e.code==='ShiftLeft'||e.code==='ShiftRight') tryDash();
-    if(e.key==='Escape') triggerQuit();
+    if(e.key==='Escape'||e.key==='p'||e.key==='P') togglePause();
   }
   if(gamePhase==='complete'||gamePhase==='outro'){
     gamePhase='outro2';
@@ -691,7 +737,16 @@ function tryDash(){
   pvx=0; pvy=0;
 }
 function triggerQuit(){
+  paused=false;
+  document.getElementById('pauseOverlay').classList.add('hidden');
   gamePhase='outro'; phaseT=0;
+  document.getElementById('hud').classList.add('hidden');
+}
+function togglePause(){
+  if(gamePhase!=='play') return;
+  paused=!paused;
+  document.getElementById('pauseOverlay').classList.toggle('hidden',!paused);
+  document.getElementById('pauseBtn').textContent=paused?'▶ RESUME':'⏸ PAUSE';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -897,18 +952,42 @@ function drawStageIntro(t){
   ctx.globalAlpha=1; ctx.textAlign='left';
 }
 function drawDeadOverlay(t){
-  ctx.fillStyle=`rgba(50,0,0,${clamp(t*3,0,0.75)})`;
-  ctx.fillRect(0,0,W,H);
-  if(t<0.3) return;
-  const a=clamp((t-0.3)*3,0,1);
+  // Blood red vignette
+  const vgrd=ctx.createRadialGradient(W/2,H/2,H*0.1,W/2,H/2,H*0.9);
+  vgrd.addColorStop(0,`rgba(80,0,0,${clamp(t*4,0,0.6)})`);
+  vgrd.addColorStop(1,`rgba(8,0,0,${clamp(t*5,0,0.92)})`);
+  ctx.fillStyle=vgrd; ctx.fillRect(0,0,W,H);
+  if(t<0.12) return;
+  const a=clamp((t-0.12)*6,0,1);
+  ctx.textAlign='center';
+  // Glitch offset
+  const glitch=t<0.4?(Math.random()-0.5)*14:0;
+  // Shadow layers for depth
+  ctx.globalAlpha=a*0.35;
+  ctx.font=`bold ${W>700?96:58}px "JetBrains Mono",monospace`;
+  ctx.fillStyle='#ff0000';
+  ctx.fillText('YOU DIED',W/2+glitch+4,H/2-24+4);
+  // Main text
   ctx.globalAlpha=a;
-  ctx.font=`bold ${W>700?52:32}px "JetBrains Mono",monospace`;
-  ctx.fillStyle='#f03c3c'; ctx.textAlign='center';
-  ctx.fillText('YOU DIED',W/2,H/2-30);
-  ctx.font=`16px "Space Grotesk",sans-serif`;
-  ctx.fillStyle=C.DIM; ctx.fillText(killReason,W/2,H/2+14);
-  ctx.font=`13px "Space Grotesk",sans-serif`;
-  ctx.fillText('Restarting stage...',W/2,H/2+42);
+  ctx.fillStyle='#ff2020';
+  ctx.fillText('YOU DIED',W/2+glitch,H/2-24);
+  // Chromatic fringe
+  ctx.globalAlpha=a*0.3;
+  ctx.fillStyle='#00ffff';
+  ctx.fillText('YOU DIED',W/2+glitch-3,H/2-24);
+  // Reason
+  ctx.globalAlpha=a*0.9;
+  ctx.font=`${W>700?18:14}px "Space Grotesk",sans-serif`;
+  ctx.fillStyle='#ff8080'; ctx.fillText(killReason,W/2,H/2+36);
+  // Respawn bar
+  const barW=260, barH=4, barX=W/2-barW/2, barY=H/2+70;
+  const prog=clamp(t/0.9,0,1);
+  ctx.globalAlpha=a*0.5;
+  ctx.fillStyle='#2a0000'; ctx.fillRect(barX,barY,barW,barH);
+  ctx.globalAlpha=a;
+  ctx.fillStyle='#f03c3c'; ctx.fillRect(barX,barY,barW*prog,barH);
+  ctx.font=`11px "JetBrains Mono",monospace`;
+  ctx.fillStyle='#646e8c'; ctx.fillText('RESPAWNING...',W/2,barY+18);
   ctx.globalAlpha=1; ctx.textAlign='left';
 }
 function drawWinOverlay(t){
@@ -1022,6 +1101,7 @@ function loop(now){
   }
 
   if(gamePhase==='play'){
+    if(paused){ requestAnimationFrame(loop); return; }
     phaseT+=dt; stageT+=dt;
     if(timeLeft!=null){
       timeLeft-=dt;
@@ -1059,7 +1139,7 @@ function loop(now){
     updateCamera(dt);
     drawWorld(ox,oy,globalT);
     drawDeadOverlay(phaseT);
-    if(phaseT>1.8){ loadLevel(levelIndex); gamePhase='stagein'; phaseT=0; }
+    if(phaseT>0.9){ loadLevel(levelIndex); gamePhase='stagein'; phaseT=0; }
     requestAnimationFrame(loop); return;
   }
 
@@ -1200,6 +1280,10 @@ function charKeyHandler(e){
   if(e.key==='Enter') startGame();
 }
 document.getElementById('charBtn').addEventListener('click',startGame);
+document.getElementById('pauseBtn').addEventListener('click',togglePause);
+document.getElementById('quitBtn').addEventListener('click',triggerQuit);
+document.getElementById('resumeBtn').addEventListener('click',togglePause);
+document.getElementById('pauseQuitBtn').addEventListener('click',triggerQuit);
 function startGame(){
   document.removeEventListener('keydown',charKeyHandler);
   charId=CHARS[selectedChar].id;
