@@ -1,0 +1,11 @@
+{
+  "name": "neonrun",
+  "version": "1.0.0",
+  "description": "NeonRun — 20-Stage Platform Challenge",
+  "scripts": {
+    "start": "npx serve . -p $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}
