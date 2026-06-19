@@ -212,38 +212,38 @@ function G(x,y,w,h=50){return P(x,y,w,h);}
 
 const LEVELS=[
 {name:'First Steps',tip:'Reach the golden orb!',
- diff:'EASY',spawn:[80,500],goal:[1080,420,44,44],W:1280,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[80,500],goal:[1080,370,44,44],W:1280,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,560,400),G(500,560,780),P(300,460,180),P(520,380,160),P(740,460,200),P(1020,440,180)]},
 
 {name:'Mind the Gap',tip:'Double-jump crosses wider gaps!',
- diff:'EASY',spawn:[60,490],goal:[1500,360,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,490],goal:[1480,300,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,560,260),P(360,490,110),P(560,430,100),P(740,370,120),P(930,430,80),P(1080,360,130),P(1310,400,100),P(1460,360,180)]},
 
 {name:'Going Up',tip:'SHIFT to dash mid-air!',
- diff:'EASY',spawn:[60,540],goal:[1580,80,44,44],W:1750,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,540],goal:[1480,20,44,44],W:1750,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,590,180),P(240,520,100),P(410,450,100),P(590,370,100),P(760,290,100),P(940,210,100),P(1110,140,100),P(1280,90,100),P(1450,80,220)]},
 
 {name:'Spike Field',tip:'Red = instant death. Avoid them!',
- diff:'EASY',spawn:[60,490],goal:[1390,300,44,44],W:1600,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,490],goal:[1310,230,44,44],W:1600,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,560,200),P(280,490,80),P(100,430,80,20,false,0,0,0,true),
         P(440,430,100),P(380,370,60,20,false,0,0,0,true),P(610,370,100),
         P(550,310,60,20,false,0,0,0,true),P(790,330,120),P(970,290,80),
         P(1090,330,80,20,false,0,0,0,true),P(1150,270,100),P(1280,290,180)]},
 
 {name:'Everything Moves',tip:'Blue platforms move — time it!',
- diff:'EASY',spawn:[60,510],goal:[1490,200,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,510],goal:[1340,120,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,190),P(240,490,110,20,true,80,0,100),P(490,410,100,20,true,60,0,110),
         P(710,350,100,20,true,0,60,90),P(900,290,100,20,true,70,0,120),
         P(1090,230,100,20,true,50,0,130),P(1290,190,180,20,true,80,0,100)]},
 
 {name:'Tightrope',tip:'Tiny platforms. Land precisely.',
- diff:'EASY',spawn:[60,530],goal:[1540,160,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,530],goal:[1480,100,44,44],W:1700,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,170),P(230,490,50),P(370,430,42),P(500,370,50),P(640,310,42),
         P(770,270,50),P(910,230,42),P(1040,200,50),P(1170,170,42),P(1310,160,50),P(1440,170,200),
         P(290,570,80),P(590,570,80),P(890,490,80)]},
 
 {name:'Danger Zone',tip:'Moving spikes. Stay sharp.',
- diff:'EASY',spawn:[60,510],goal:[1680,210,44,44],W:1900,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,510],goal:[1680,150,44,44],W:1900,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,190),P(240,490,100,20,true,60,0,100),P(200,430,60,20,false,0,0,0,true),
         P(470,430,100,20,true,80,0,110),P(430,370,60,20,false,0,0,0,true),
         P(710,370,90,20,true,50,0,120),P(890,310,80),P(850,250,60,20,false,0,0,0,true),
@@ -251,7 +251,7 @@ const LEVELS=[
         P(1490,230,100,20,true,60,0,130),P(1640,210,200)]},
 
 {name:'The Long Run',tip:"A marathon of jumps. Don't rush.",
- diff:'EASY',spawn:[60,510],goal:[2180,290,44,44],W:2400,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,510],goal:[2195,220,44,44],W:2400,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,150),
         ...Array.from({length:6},(_,i)=>P(180+i*140,530-i*20,80)),
         P(1050,390,100),P(1210,350,80),P(1370,310,100),
@@ -259,12 +259,12 @@ const LEVELS=[
         P(1750,270,90),P(1890,290,80,20,true,60,0,110),P(2050,270,90),P(2150,290,200)]},
 
 {name:'Against the Clock',tip:'25 seconds. Move!',
- diff:'EASY',spawn:[60,490],goal:[1390,230,44,44],W:1600,H:700,tl:25,grav:1,wind:0,
+ diff:'EASY',spawn:[60,490],goal:[1370,160,44,44],W:1600,H:700,tl:25,grav:1,wind:0,
  plats:[G(0,570,190),P(250,470,120),P(450,390,100),P(630,330,100),
         P(810,270,100),P(990,230,100),P(1170,230,100),P(1350,230,160)]},
 
 {name:'Rising Challenge',tip:'Every skill needed. Good luck.',
- diff:'EASY',spawn:[60,530],goal:[1960,95,44,44],W:2200,H:700,tl:null,grav:1,wind:0,
+ diff:'EASY',spawn:[60,530],goal:[1890,30,44,44],W:2200,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,170),P(230,490,80),P(380,430,60,20,false,0,0,0,true),
         P(440,430,80),P(590,370,60),P(720,370,50,20,false,0,0,0,true),
         P(790,330,80,20,true,60,0,110),P(970,270,70),P(1090,270,50,20,false,0,0,0,true),
@@ -273,34 +273,34 @@ const LEVELS=[
 
 // ── HARD ──────────────────────────────────────────────────────────────────
 {name:'Speed Shift',tip:'Platforms move faster. React!',
- diff:'HARD',spawn:[60,510],goal:[1580,170,44,44],W:1800,H:700,tl:null,grav:1,wind:0,
+ diff:'HARD',spawn:[60,510],goal:[1580,100,44,44],W:1800,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,170),P(230,470,100,20,true,100,0,180),P(490,410,90,20,true,90,0,190),
         P(730,350,90,20,true,0,80,170),P(950,290,80,20,true,100,0,200),
         P(1170,250,90,20,true,80,0,190),P(1390,210,80,20,true,0,70,210),P(1540,170,200),
         P(290,390,60,20,false,0,0,0,true),P(610,310,60,20,false,0,0,0,true)]},
 
 {name:'Low Ceiling',tip:'Tight gaps. Plan each jump.',
- diff:'HARD',spawn:[60,490],goal:[1680,270,44,44],W:1900,H:700,tl:null,grav:1,wind:0,
+ diff:'HARD',spawn:[60,490],goal:[1600,200,44,44],W:1900,H:700,tl:null,grav:1,wind:0,
  plats:[G(0,570,290),P(240,315,300,28),P(640,255,300,28),P(1090,195,300,28),
         P(340,490,100),P(510,470,80),P(670,490,80),P(840,430,100),
         P(1010,390,80),P(1190,350,100),P(1390,310,100),P(1550,270,240),
         P(290,450,60,20,false,0,0,0,true),P(550,430,60,20,false,0,0,0,true)]},
 
 {name:'Crosswinds',tip:'Wind pushes you right. Lean back!',
- diff:'HARD',spawn:[60,510],goal:[1580,190,44,44],W:1800,H:700,tl:null,grav:1,wind:400,
+ diff:'HARD',spawn:[60,510],goal:[1570,120,44,44],W:1800,H:700,tl:null,grav:1,wind:400,
  plats:[G(0,570,190),P(270,470,90),P(450,410,80),P(640,350,90),
         P(820,290,80),P(1000,250,90),P(1190,210,90),P(1370,190,80),P(1540,190,200),
         P(340,430,60,20,false,0,0,0,true),P(730,310,60,20,false,0,0,0,true)]},
 
 {name:'Heavy World',tip:'Gravity is 1.7× normal. Adjust!',
- diff:'HARD',spawn:[60,510],goal:[1480,250,44,44],W:1700,H:700,tl:null,grav:1.7,wind:0,
+ diff:'HARD',spawn:[60,510],goal:[1460,180,44,44],W:1700,H:700,tl:null,grav:1.7,wind:0,
  plats:[G(0,570,190),P(250,490,100),P(420,430,90),P(590,370,90),
         P(760,310,90),P(930,270,90),P(1090,250,100),
         P(1270,250,90,20,true,70,0,160),P(1440,250,200),
         P(340,470,60,20,false,0,0,0,true),P(660,350,60,20,false,0,0,0,true)]},
 
 {name:'Perfect Storm',tip:'20s. Moving platforms. Spikes.',
- diff:'HARD',spawn:[60,510],goal:[1780,150,44,44],W:2000,H:700,tl:20,grav:1,wind:0,
+ diff:'HARD',spawn:[60,510],goal:[1700,80,44,44],W:2000,H:700,tl:20,grav:1,wind:0,
  plats:[G(0,570,170),P(230,470,90,20,true,80,0,200),P(190,410,60,20,false,0,0,0,true),
         P(470,410,90,20,true,80,0,210),P(430,350,60,20,false,0,0,0,true),
         P(710,350,80,20,true,0,80,190),P(910,290,80,20,true,80,0,220),
@@ -309,7 +309,7 @@ const LEVELS=[
         P(1490,190,80,20,true,80,0,230),P(1680,150,200)]},
 
 {name:'No Shortcuts',tip:'Everything at once. Use it all.',
- diff:'HARD',spawn:[60,510],goal:[2080,95,44,44],W:2300,H:700,tl:null,grav:1.2,wind:0,
+ diff:'HARD',spawn:[60,510],goal:[1960,25,44,44],W:2300,H:700,tl:null,grav:1.2,wind:0,
  plats:[G(0,570,170),P(230,490,80,20,true,70,0,200),P(190,430,50,20,false,0,0,0,true),
         P(450,430,80),P(410,370,50,20,false,0,0,0,true),P(610,370,80,20,true,60,0,210),
         P(790,310,70,20,true,0,70,200),P(970,250,70),P(930,190,50,20,false,0,0,0,true),
@@ -319,7 +319,7 @@ const LEVELS=[
 
 // ── IMPOSSIBLE ────────────────────────────────────────────────────────────
 {name:'The Impossible Wall',tip:'⚠ Warned. Platforms fly.',
- diff:'IMPOSSIBLE',spawn:[60,530],goal:[2180,75,44,44],W:2400,H:700,tl:30,grav:1.3,wind:0,
+ diff:'IMPOSSIBLE',spawn:[60,530],goal:[2110,25,44,44],W:2400,H:700,tl:30,grav:1.3,wind:0,
  plats:[G(0,570,150),P(210,490,45,20,true,110,0,270),P(170,430,35,20,false,0,0,0,true),
         P(410,450,45,20,true,100,0,280),P(590,390,40,20,true,0,90,260),
         P(550,330,35,20,false,0,0,0,true),P(750,370,45,20,true,100,0,290),
@@ -330,7 +330,7 @@ const LEVELS=[
         P(1990,130,40,20,true,0,70,300),P(2090,95,180)]},
 
 {name:'Gravity Hell',tip:'2× gravity. 350px/s platforms.',
- diff:'IMPOSSIBLE',spawn:[60,490],goal:[1980,95,44,44],W:2200,H:700,tl:25,grav:2,wind:0,
+ diff:'IMPOSSIBLE',spawn:[60,490],goal:[1970,25,44,44],W:2200,H:700,tl:25,grav:2,wind:0,
  plats:[G(0,550,150),P(210,490,45,20,true,100,0,350),P(170,430,30,20,false,0,0,0,true),
         P(390,450,45,20,true,90,0,360),P(570,390,40,20,true,0,80,340),
         P(740,350,40,20,true,90,0,370),P(710,290,30,20,false,0,0,0,true),
@@ -340,7 +340,7 @@ const LEVELS=[
         P(1810,150,40,20,true,0,70,370),P(1970,95,180)]},
 
 {name:'The Storm',tip:'Wind+gravity+sprint. 20 seconds.',
- diff:'IMPOSSIBLE',spawn:[60,490],goal:[2080,75,44,44],W:2300,H:700,tl:20,grav:1.8,wind:-350,
+ diff:'IMPOSSIBLE',spawn:[60,490],goal:[2060,5,44,44],W:2300,H:700,tl:20,grav:1.8,wind:-350,
  plats:[G(0,550,150),P(210,480,40,20,true,100,0,360),P(390,430,38,20,true,0,80,350),
         P(360,370,28,20,false,0,0,0,true),P(570,410,40,20,true,90,0,370),
         P(750,350,38,20,true,0,80,360),P(720,290,28,20,false,0,0,0,true),
@@ -350,7 +350,7 @@ const LEVELS=[
         P(1830,150,38,20,true,0,70,390),P(2010,110,40,20,true,70,0,400),P(2050,75,200)]},
 
 {name:'ENDGAME',tip:'< 10% of players finish this. Are you?',
- diff:'IMPOSSIBLE',spawn:[60,490],goal:[2280,55,44,44],W:2500,H:700,tl:18,grav:2,wind:300,
+ diff:'IMPOSSIBLE',spawn:[60,490],goal:[2255,5,44,44],W:2500,H:700,tl:18,grav:2,wind:300,
  plats:[G(0,550,140),P(190,480,35,20,true,110,0,420),P(150,420,25,20,false,0,0,0,true),
         P(370,450,35,20,true,0,90,410),P(550,410,35,20,true,110,0,430),
         P(520,350,25,20,false,0,0,0,true),P(730,390,35,20,true,0,90,420),
